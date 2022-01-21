@@ -321,12 +321,10 @@ install( TARGETS crypto
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib )
 
-# just to make it work with FindOpenSSL....
-
-add_custom_command( TARGET crypto POST_BUILD 
-    COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../bin/libcrypto.lib
-    COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../bin/libcrypto.dll
-    COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../bin/libcrypto.so
-    COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../bin/libcrypto.a
-    COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../bin/libcrypto.dylib
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<TARGET_FILE_NAME:crypto> ${CMAKE_CURRENT_BINARY_DIR}/../bin/$<TARGET_FILE_NAME:crypto> )
+if( OPENSSL_GENERATE_PSEUDO_CONFIG )
+  # just to make it work with FindOpenSSL....
+  add_custom_command( TARGET crypto POST_BUILD 
+      COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../lib/libcrypto.lib
+      COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../lib/libcrypto.a
+      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<TARGET_FILE_NAME:crypto> ${CMAKE_CURRENT_BINARY_DIR}/../lib/$<TARGET_FILE_NAME:crypto> )
+endif()

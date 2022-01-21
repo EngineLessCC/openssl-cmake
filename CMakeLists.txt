@@ -31,6 +31,7 @@ cmake_minimum_required( VERSION 3.1.0 )
 set( CMAKE_DISABLE_SOURCE_CHANGES ON )
 set( CMAKE_DISABLE_IN_SOURCE_BUILD ON )
 option( OPENSSL_BUILD_WITH_INSTALL_NAMES "Build libraries with unadorned names" OFF )
+option( OPENSSL_GENERATE_PSEUDO_CONFIG "Generate pseudo files for FindOpenSSL" OFF )
 
 set( CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake" )
 
@@ -227,18 +228,14 @@ set( CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${VERSION_STRING}" )
 
 include( CPack )
 
-# generate pseudo libs so FindOpenSSL doesnt cry during configure.... its horrible
-file( MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin" )
-file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libcrypto.lib" "placeholder" )
-file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libcrypto.dll" "placeholder" )
-file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libcrypto.so" "placeholder" )
-file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libcrypto.a" "placeholder" )
-file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libcrypto.dylib" "placeholder" )
-file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libssl.lib" "placeholder" )
-file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libssl.dll" "placeholder" )
-file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libssl.so" "placeholder" )
-file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libssl.a" "placeholder" )
-file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libssl.dylib" "placeholder" )
+if( OPENSSL_GENERATE_PSEUDO_CONFIG )
+  # generate pseudo libs so FindOpenSSL doesnt cry during configure.... its horrible
+  file( MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/lib" )
+  file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/lib/libcrypto.lib" "placeholder" )
+  file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/lib/libcrypto.a" "placeholder" )
+  file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/lib/libssl.lib" "placeholder" )
+  file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/lib/libssl.a" "placeholder" )
+endif()
 
 set( CMAKE_EXPORT_PACKAGE_REGISTRY ON )
 export( PACKAGE OpenSSL )
