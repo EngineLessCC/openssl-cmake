@@ -235,6 +235,7 @@ if( OPENSSL_GENERATE_PSEUDO_CONFIG )
   file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/lib/libcrypto.a" "placeholder" )
   file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/lib/libssl.lib" "placeholder" )
   file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/lib/libssl.a" "placeholder" )
+  set( OPENSSL_ROOT_DIR "${CMAKE_CURRENT_BINARY_DIR}")
 endif()
 
 set( CMAKE_EXPORT_PACKAGE_REGISTRY ON )
