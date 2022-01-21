@@ -280,7 +280,11 @@ endif()
 
 add_library( crypto ${LIBSRC} ${OBJECTS_SRC} )
 
-target_include_directories( crypto PUBLIC ${PROJECT_BINARY_DIR}/include )
+target_include_directories(crypto
+  PUBLIC
+  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
 
 if( WIN32 AND NOT CYGWIN )
   target_link_libraries( crypto ws2_32 crypt32 )
