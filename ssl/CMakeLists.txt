@@ -76,3 +76,12 @@ install( TARGETS ssl
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib )
+
+# just to make it work with FindOpenSSL....
+add_custom_command( TARGET ssl POST_BUILD 
+    COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../bin/libssl.lib
+    COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../bin/libssl.dll
+    COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../bin/libssl.so
+    COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../bin/libssl.a
+    COMMAND ${CMAKE_COMMAND} -E rm -Rf ${CMAKE_CURRENT_BINARY_DIR}/../bin/libssl.dylib
+    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/$<TARGET_FILE_NAME:ssl> ${CMAKE_CURRENT_BINARY_DIR}/../bin/$<TARGET_FILE_NAME:ssl> )

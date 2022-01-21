@@ -173,3 +173,6 @@ pod2htmd.tmp
 
 # Windows manifest files
 *.manifest
+
+# cmake build dir in vscode
+build/

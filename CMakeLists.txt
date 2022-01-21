@@ -227,6 +227,19 @@ set( CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${VERSION_STRING}" )
 
 include( CPack )
 
+# generate pseudo libs so FindOpenSSL doesnt cry during configure.... its horrible
+file( MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin" )
+file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libcrypto.lib" "placeholder" )
+file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libcrypto.dll" "placeholder" )
+file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libcrypto.so" "placeholder" )
+file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libcrypto.a" "placeholder" )
+file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libcrypto.dylib" "placeholder" )
+file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libssl.lib" "placeholder" )
+file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libssl.dll" "placeholder" )
+file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libssl.so" "placeholder" )
+file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libssl.a" "placeholder" )
+file( WRITE "${CMAKE_CURRENT_BINARY_DIR}/bin/libssl.dylib" "placeholder" )
+
 set( CMAKE_EXPORT_PACKAGE_REGISTRY ON )
 export( PACKAGE OpenSSL )
 export( TARGETS ssl crypto NAMESPACE OpenSSL:: FILE OpenSSLConfig.cmake )
